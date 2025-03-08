@@ -11,7 +11,7 @@ def get_card_data(url):
         card_name = soup.find('h1', id='product_name').text.strip()
         prices = {}
 
-        # Extract raw prices for various grades
+        # Extract raw prices
         price_elements = soup.find_all('span', class_='price js-price')
         if len(price_elements) >= 6:
             prices['Raw'] = price_elements[0].text.strip()
@@ -30,7 +30,6 @@ def get_card_data(url):
         return None, None
 
 if __name__ == "__main__":
-    # Prompt for the text file
     file_path = input("Enter the path to the text file containing the URLs: ")
 
     try:
@@ -47,7 +46,7 @@ if __name__ == "__main__":
             card_data = {'Card Name': card_name, **prices}
             all_card_data.append(card_data)
 
-    # Create a DataFrame and save to Excel
+
     df = pd.DataFrame(all_card_data)
     df.to_excel('card_prices.xlsx', index=False)
     print("Card prices saved to card_prices.xlsx")
